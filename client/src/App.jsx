@@ -10,6 +10,7 @@ import Cars from './pages/Car/Car'
 import Footer from './components/Footer'
 import Header from './components/Header'
 import  { Toaster } from 'react-hot-toast';
+import CarDetails from './pages/Car/CarDetails'
 function App() {
   
   return (
@@ -26,7 +27,7 @@ function App() {
       <Route path='/register' element = {<Register/>}></Route>
 
       <Route path = '/cars' element = {<Cars/>}></Route>
-
+      <Route path = '/cars/:id' element ={<CarDetails/>}></Route>
 
      </Routes>
      <Footer/>

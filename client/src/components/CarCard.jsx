@@ -16,7 +16,6 @@ export default function CarCard({car}) {
             <p className="mt-3 line-clamp-2 text-sm leading-6 text-[#65716a]">{car?.about}</p>
         </div>
      </div>
-     
      </Link>
     </>
   )
