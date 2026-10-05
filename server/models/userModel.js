@@ -20,10 +20,16 @@ const userSchema = new mongoose.Schema(
     phone:{
         type:String,
         required:[true, "Phone no required"]
+    },
+
+    isAdmin:{
+        type:Boolean,
+        default:false
     }
     
 
-}
+},
+{timestamps:true}
 )
 
 

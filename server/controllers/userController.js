@@ -108,3 +108,34 @@ export const userLogin = async (req, res) => {
         })
     }
 }
+
+//update user
+
+export const updateUser = async(req, res) =>{
+    try {
+        const {id} = req.params
+if(!id){
+    return res.status(404).send({
+        success:false,
+        message:"user not found"
+    })
+}
+const data = req.body
+const user = await userModel.findByIdAndUpdate(id, {
+    $set:data
+}, {returnOriginal:false})
+return res.status(200).send({
+    success:true,
+    message: "User has been updated",
+    user
+})
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success:false,
+            message:"User not found",
+            error
+        })
+    }
+}
