@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import CarsData from '../../data/carsData.json'
-
+import toast from 'react-hot-toast'
+//import BookingModel from '../../components/BookingModel'
 
 export default function CarDetails() {
 
@@ -11,6 +12,20 @@ export default function CarDetails() {
     let [loading, setLoading] = useState(false)
     const user = true
 
+    //booking pop up
+
+    //let[show, setShow] = useState(false)
+    //let[pickupDate,setPickupDate ] =useState(new Date().toISOString().split('T')[0])
+    //let[returnDate, setReturnDate] = useState(new Date().toISOString().split('T')[0])
+    
+    //booking function
+   // const handleBooking =() =>{
+     //   toast.success("Booking confirmed")
+     //   setShow(false)
+    //}
+    
+    
+    
     //find card data
     useEffect(() => {
         const getCardInfo = async () => {
@@ -112,7 +127,8 @@ export default function CarDetails() {
                                     <h2>Price : ${carDetails?.price} - per day</h2>
                                     {!user?(
                                     <Link to={'/login'}>Please login to Book</Link>):(
-                                        <button className='mt-4 rounded-md bg-teal-600 px-4 py-2 text-white transition-colors hover:bg-teal-700'>Book Now</button>
+                                        <button  className='mt-4 rounded-md bg-teal-600 px-4 py-2 text-white transition-colors hover:bg-teal-700'>Book Now</button>
+                                    
                                     )}
                                     
                             </div>
@@ -120,6 +136,11 @@ export default function CarDetails() {
                         
                         </section>
                     </div>
+
+                    {/*Booking modal 
+                    {
+                        show && <BookingModel/>
+                    }*/}
                 </main>
 
             )}
