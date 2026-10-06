@@ -4,16 +4,23 @@ import carModel from "../models/carModel.js"
 export const addCar = async(req, res)=>{
     try {
         //get car data
-        const{name,about,year,seats,model,milage,fuel,category,price,image,transmission, status}= req.body
-        if(!name || !about  || !year || !seats ||!fuel || !model || !category || !milage || !price || !image  ){
+        const{name,about,year,seats,model,milage,fuel,category,price,transmission, status}= req.body
+        if(!name || !about  || !year || !seats ||!fuel || !model || !category || !milage || !price  ){
             return res.status(500).send({
                 success:false,
                 message:"Plaese provide all fields"
             })
         }
-
+   //image val
+   if(!req.file){
+    return res.status(404).send({
+        success:false,
+        message:"Plesae add image file"
+    })
+   }
+   const photoBase64 = req.file? req.file.buffer.toString('base64'):null
         //save
-        const car = await carModel({name,about,year,model,seats,milage,fuel,category,price,image,transmission, status})
+        const car = new carModel({name,about,year,model,seats,milage,fuel,category,price,transmission,image:photoBase64, status})
         await car.save()
         res.status(201).send({
             success:true,
@@ -100,7 +107,7 @@ export const updateCar = async(req,res)=>{
         if(!id){
             res.status(404).send({
             success:false,
-            message:"Car not found by id",
+            message:"Invalid credential",
             })
         }
       const data = req.body

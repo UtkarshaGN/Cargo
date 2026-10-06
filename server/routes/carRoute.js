@@ -1,11 +1,14 @@
 import express from 'express'
 import { addCar, deleteCar, getAllCar, getCarDetails, updateCar } from '../controllers/carController.js'
 import {userAuth, isAdmin} from '../middleware/authMiddleware.js'
+import upload from '../middleware/multer.js'
 const router = express.Router()
 
 
 //add car
-router.post('/add-car', userAuth, isAdmin , addCar)
+//router.post('/add-car', userAuth, isAdmin , addCar)
+
+router.post('/add-car', userAuth, isAdmin, upload.single("image"), addCar)
 
 //get all cars
 router.get('/all-cars', getAllCar)
