@@ -1,6 +1,22 @@
 import React from 'react'
 
-export default function BookingModel() {
+export default function BookingModel(prop) {
+  const {show,setShow,price,pickupDate, setPickupdate, returnDate, setReturnDate, handleBooking}= prop
+
+  //total price
+
+  const calculateTotal = () =>{
+    if(pickupDate && returnDate){
+      const days = Math.max(
+        Math.ceil(new Date(returnDate) - new Date(pickupDate))/
+        (1000*60*60*24)
+      );
+      return days*price
+    }
+    return price;
+  }
+
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 p-4 backdrop-blur-sm">
       <section
@@ -19,7 +35,7 @@ export default function BookingModel() {
             </h2>
             <p className="mt-1 text-sm text-slate-500">Choose your dates and review the total.</p>
           </div>
-          <button
+          <button onClick={()=>setShow(false)}
             aria-label="Close booking modal"
             className="rounded-full p-2 text-xl leading-none text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
             type="button"
@@ -34,7 +50,7 @@ export default function BookingModel() {
               <span className="mb-2 block text-sm font-medium text-slate-700">Pick-up date</span>
               <input
                 className="w-full rounded-lg border border-slate-200 px-3 py-3 text-sm text-slate-700 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-600/15"
-                type="date"
+                type="date" defaultValue={pickupDate} onChange={(e)=>setPickupdate(e.target.value)}
               />
             </label>
             <label className="block">
@@ -42,24 +58,25 @@ export default function BookingModel() {
               <input
                 className="w-full rounded-lg border border-slate-200 px-3 py-3 text-sm text-slate-700 outline-none transition focus:border-teal-600 focus:ring-2 focus:ring-teal-600/15"
                 type="date"
+                defaultValue={returnDate} onChange={(e)=>setReturnDate(e.target.value)}
               />
             </label>
           </div>
 
           <div className="rounded-xl bg-slate-50 p-5">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-slate-600">Price per day</span>
-              <span className="font-medium text-slate-900">$89.00</span>
+              <span className="text-slate-600">Price per day :{price}</span>
+              
             </div>
             <div className="my-4 border-t border-dashed border-slate-200" />
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-slate-900">Total</span>
-              <span className="text-xl font-semibold text-slate-900">$178.00</span>
+              <span className="font-semibold text-slate-900">Total: {calculateTotal()}</span>
+           
             </div>
           </div>
 
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-            <button
+            <button onClick={() =>setShow(false)}
               className="rounded-lg border border-slate-200 px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               type="button"
             >
@@ -67,9 +84,9 @@ export default function BookingModel() {
             </button>
             <button
               className="rounded-lg bg-teal-700 px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-800"
-              type="button"
+              type="button" onClick={handleBooking}
             >
-              Save changes
+              Book now
             </button>
           </div>
         </div>

@@ -11,6 +11,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import  { Toaster } from 'react-hot-toast';
 import CarDetails from './pages/Car/CarDetails'
+import Profile from './pages/User/Profile'
 function App() {
   
   return (
@@ -25,7 +26,7 @@ function App() {
 {/*auth*/}
       <Route path='/login' element = {<Login/>}></Route>
       <Route path='/register' element = {<Register/>}></Route>
-
+      <Route path='/profile' element ={<Profile/>}></Route>
       <Route path = '/cars' element = {<Cars/>}></Route>
       <Route path = '/cars/:id' element ={<CarDetails/>}></Route>
 

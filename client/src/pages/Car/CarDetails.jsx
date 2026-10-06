@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import CarsData from '../../data/carsData.json'
 import toast from 'react-hot-toast'
-//import BookingModel from '../../components/BookingModel'
+import BookingModel from '../../components/BookingModel'
 
 export default function CarDetails() {
 
@@ -14,17 +14,15 @@ export default function CarDetails() {
 
     //booking pop up
 
-    //let[show, setShow] = useState(false)
-    //let[pickupDate,setPickupDate ] =useState(new Date().toISOString().split('T')[0])
-    //let[returnDate, setReturnDate] = useState(new Date().toISOString().split('T')[0])
+    let[show, setShow] = useState(false)
+    let[pickupDate,setPickupDate ] =useState(new Date().toISOString().split('T')[0])
+    let[returnDate, setReturnDate] = useState(new Date().toISOString().split('T')[0])
     
     //booking function
-   // const handleBooking =() =>{
-     //   toast.success("Booking confirmed")
-     //   setShow(false)
-    //}
-    
-    
+   const handleBooking =() =>{
+        toast.success("Booking confirmed")
+        setShow(false)
+    }
     
     //find card data
     useEffect(() => {
@@ -127,7 +125,9 @@ export default function CarDetails() {
                                     <h2>Price : ${carDetails?.price} - per day</h2>
                                     {!user?(
                                     <Link to={'/login'}>Please login to Book</Link>):(
-                                        <button  className='mt-4 rounded-md bg-teal-600 px-4 py-2 text-white transition-colors hover:bg-teal-700'>Book Now</button>
+                                        <button onClick={()=>setShow(!show)}  className='mt-4 rounded-md bg-teal-600 px-4 py-2 text-white transition-colors hover:bg-teal-700'>
+                                            
+                                            Book Now</button>
                                     
                                     )}
                                     
@@ -137,10 +137,17 @@ export default function CarDetails() {
                         </section>
                     </div>
 
-                    {/*Booking modal 
+                    {/*Booking modal */}
                     {
-                        show && <BookingModel/>
-                    }*/}
+                        show && <BookingModel 
+                        show ={show}
+                        setShow = {setShow}
+                        price={carDetails?.price}
+                        setPickupDate = {setPickupDate}
+                        returnDate = {returnDate}
+                        setReturnDate = {setReturnDate}
+                        handleBooking = {handleBooking}/>
+                    }
                 </main>
 
             )}
