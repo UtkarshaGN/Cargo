@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router'
 import CarsData from '../../data/carsData.json'
 import toast from 'react-hot-toast'
 import BookingModel from '../../components/BookingModel'
+import { useDispatch, useSelector } from 'react-redux'
+import { getCarDetails } from '../../store/features/carSlice'
 
 export default function CarDetails() {
 
@@ -12,6 +14,8 @@ export default function CarDetails() {
     let [loading, setLoading] = useState(false)
     const user = true
 
+    const {cars} = useSelector(state=>state.car)
+    const dispatch = useDispatch()
     //booking pop up
 
     let[show, setShow] = useState(false)
@@ -29,18 +33,24 @@ export default function CarDetails() {
         const getCardInfo = async () => {
             setLoading(true)
             try {
-                const carInfo = CarsData.find((car) => car.id === parseInt(id))
-                if (carInfo) {
-                    setCarDetails(carInfo)
-                }
+            dispatch(getCarDetails(id));
+            if(cars){
+                const carInfo  = cars?.find((car) =>car?._id ===id)
+                setCarDetails(carInfo)
+            }
+                //frontend logic
+               // const carInfo = CarsData.find((car) => car.id === parseInt(id))
+                //if (carInfo) {
+               //     setCarDetails(carInfo)
+               // }
 
-                setLoading(false)
+                //setLoading(false)
             } catch (error) {
                 console.log(error)
             }
         }
         getCardInfo()
-    }, [id])
+    }, [id, cars, dispatch])
     console.log(carDetails) // get cars data
 
 //show data
@@ -58,7 +68,8 @@ export default function CarDetails() {
                         <section className="grid overflow-hidden border border-[#d9ded9] bg-white shadow-sm lg:grid-cols-2">
                             <div className="relative min-h-[300px] bg-[#e8ede8] sm:min-h-[440px]">
                                 <img
-                                    src={carDetails?.image}
+                                    
+                                     src={`data:image/png;base64,${carDetails?.image}`} 
                                     alt={carDetails?.['name '] || 'Car'}
                                     className="absolute inset-0 h-full w-full object-cover"
                                 />

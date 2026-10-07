@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CarsData from "../../data/carsData.json"
 import CarCard from '../../components/CarCard'
-
+import { getAllCars } from '../../store/features/carSlice'
+import {useDispatch, useSelector} from 'react-redux'
 export default function Car() {
+
+  const dispatch = useDispatch()
+  const {cars} = useSelector((state)=>state.car)
+
+  useEffect(()=>{
+    const getCars = ()=>{
+      try {
+        dispatch(getAllCars())
+      } catch (error) {
+        console.log(error)
+      }
+    };
+    getCars()
+
+  },[dispatch])
   return (
     <main className="min-h-[70vh] bg-[#f4f5f1] px-5 py-12 text-[#17211c] sm:px-8 sm:py-16 lg:px-12">
       <div className="mx-auto max-w-7xl">
@@ -20,8 +36,8 @@ export default function Car() {
           </p>
         </header>
         <div className="grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
-        {CarsData.map(car =>(
-          <CarCard car ={car} key ={car.id} />
+        {cars?.map(car =>(
+          <CarCard car ={car} key ={car?._id} />
         ))}
         </div>
       </div>
