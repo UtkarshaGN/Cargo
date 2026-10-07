@@ -35,7 +35,7 @@ export default function CarDetails() {
             try {
             dispatch(getCarDetails(id));
             if(cars){
-                const carInfo  = cars?.find((car) =>car?._id ===id)
+                const carInfo  = cars?.find((car) =>car._id == id)
                 setCarDetails(carInfo)
             }
                 //frontend logic
@@ -44,7 +44,7 @@ export default function CarDetails() {
                //     setCarDetails(carInfo)
                // }
 
-                //setLoading(false)
+                setLoading(false)
             } catch (error) {
                 console.log(error)
             }
@@ -106,11 +106,11 @@ export default function CarDetails() {
                                 <div className="mt-8 grid grid-cols-2 border-l border-t border-[#e3e7e3]">
                                     <div className="border-b border-r border-[#e3e7e3] px-4 py-4 sm:px-5">
                                         <p className="text-xs uppercase tracking-[0.14em] text-[#778079]">Category</p>
-                                        <p className="mt-2 font-medium">{carDetails?.Category}</p>
+                                        <p className="mt-2 font-medium">{carDetails?.category}</p>
                                     </div>
                                     <div className="border-b border-r border-[#e3e7e3] px-4 py-4 sm:px-5">
                                         <p className="text-xs uppercase tracking-[0.14em] text-[#778079]">Year</p>
-                                        <p className="mt-2 font-medium">{carDetails?.Year}</p>
+                                        <p className="mt-2 font-medium">{carDetails?.year}</p>
                                     </div>
                                     <div className="border-b border-r border-[#e3e7e3] px-4 py-4 sm:px-5">
                                         <p className="text-xs uppercase tracking-[0.14em] text-[#778079]">Seats</p>
