@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Link, useNavigate } from 'react-router'
+import {useDispatch, useSelector} from 'react-redux'
+import { register, reset } from '../../store/features/authSlice'
 
 export default function Register() {
   let[name, setName] = useState('')
@@ -10,23 +12,36 @@ export default function Register() {
 
 
   const navigation = useNavigate()
-  const handleSubmit =(e) =>{
-    e.preventDefault()
-    try {
-      if(!name|| !phone || !email || !password){
-        return toast.error("Please fill the all fields")
-      }
-      console.log('auth form data', name + email + password + phone)
-      setName('')
+  const dispatch = useDispatch()
+const {error, success} = useSelector(state =>state.auth)
+
+useEffect(()=>{
+  if(success){
+setName('')
       setEmail('')
       setPhone('')
       setPassword('')
       navigation('/login')
       toast.success("Registration success")
+  }
+
+  if(error){
+    toast.error(error)
+  }
+}, [dispatch,navigation, success, error])
+
+
+  const handleSubmit =(e) =>{
+    e.preventDefault()
+   
+      if(!name|| !phone || !email || !password){
+        return toast.error("Please fill the all fields")
+      }
+      //console.log('auth form data', name + email + password + phone)
       
-    } catch (error) {
-      
-    }
+      dispatch(register({name,password,phone,email}))
+      dispatch(reset())
+   
   }
   return (
     <main className="mx-auto grid min-h-[620px] max-w-7xl grid-cols-1 items-center gap-10 px-5 py-12 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-12 lg:py-16">

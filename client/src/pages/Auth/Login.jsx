@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, reset } from '../../store/features/authSlice'
 export default function Login() {
 
   let[email, setEmail] = useState('')
@@ -8,24 +10,39 @@ export default function Login() {
 
   const navigation = useNavigate() 
 
+  //redux
+  const dispatch = useDispatch()
+const {error, success} = useSelector(state =>state.auth)
+
+
+//redux
+//lifecycle methods
+useEffect(()=>{
+  if(success){
+
+    setEmail("")
+    setPassword("")
+    toast.success("Login sucessfully")
+    navigation("/cars")
+  }
+  if(error){
+    toast.error(error)
+  }
+}, [dispatch,navigation, success, error])
+
   let handleSubmit = (e) =>{
     e.preventDefault()
-
-    try {
       if(!email || !password){
         return toast.error("Plase fill all the fields")
       }
+      //console.log("auth form data", email+password)
+     
 
-      console.log("auth form data", email+password)
-      setEmail("")
-      setPassword("")
-      toast.success("Login sucessfully")
-     navigation("/cars")
-      
-    } catch (error) {
-      console.log(error)
+      //redux code
+        dispatch(login({password,email}))
+        dispatch(reset())
+    
     }
-  }
 
   return (
     <main className="mx-auto  min-h-[620px] max-w-7xl  px-5 py-12  lg:px-12 lg:py-16">
