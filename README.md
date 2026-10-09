@@ -1,5 +1,5 @@
 
-# 🚗 Cargo – Car Rental Web Application
+# 🚗 Cargo 
 
 Cargo is a full-stack car rental web application built using the MERN stack and modern JavaScript technologies. It allows users to explore available cars, view car details, register and log in to their accounts, and make bookings through a responsive user interface.
 
